@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: goldaccounting-telegram-bot
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn bot:app --host 0.0.0.0 --port $PORT --workers 1
+    healthCheckPath: /health
+    envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: OWNER_TELEGRAM_ID
+        value: "1508795686"
+      - key: ALLOWED_GROUP_IDS
+        value: ""
+      - key: WEBHOOK_SECRET
+        generateValue: true
+      - key: DB_PATH
+        value: /tmp/goldbot.sqlite3
